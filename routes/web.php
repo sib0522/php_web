@@ -22,6 +22,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+/*
 Route::get("/", [IndexController::class, "index"]);
 Route::get("/user", [UserController::class, "user"]);
 Route::get("/account/register", [AccountController::class, "register"]);
@@ -32,3 +34,4 @@ Route::get("/file/resource", [FileController::class, "resource"]);
 Route::get("/file/gallery", [FileController::class, "gallery"]);
 Route::get("/table/:name", [TableController::class, "table_list"]);
 Route::get("/table/admin/:name", [TableController::class, "table_detail"]);
+*/
