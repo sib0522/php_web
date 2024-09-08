@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Core\UseCases\UserUsecase;
+use App\Core\UseCases\UserUsecaseInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // Inject UserUsecase
+        $this->app->bind(UserUsecaseInterface::class, UserUsecase::class);
     }
 
     /**
