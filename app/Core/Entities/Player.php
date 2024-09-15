@@ -18,4 +18,3 @@ final class Player {
         $this->credits = $credits;
     }
 }
- 
