@@ -4,33 +4,17 @@ namespace App\Infrastructure\Repositories;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-
-final class userModel {
-    public readonly string $email;
-    public readonly string $password;
-    public readonly string $nickname;
-    public readonly int $updatedAt;
-    public readonly int $createdAt;
-
-    public function __construct(string $email, string $password, string $nickname, int $updatedAt, int $createdAt) 
-    {
-        $this->email = $email;
-        $this->password = $password;
-        $this->nickname = $nickname;
-        $this->updatedAt = $updatedAt;
-        $this->createdAt = $createdAt;
-    }
-}
+use App\Core\Entities\User;
 
 interface UserRepositoryInterface {
     public function createUser(string $nickname, string $email, string $password) : bool;
     public function updateUser();
-    public function getUserByEmail(string $email) : userModel;
+    public function getUserByEmail(string $email) : User;
 }
 
 class UserRepository implements UserRepositoryInterface, RepositoryBaseInterface {
     public function tableName(): string {
-        return "admin_account";
+        return "user";
     }
 
     public function createUser(string $nickname, string $email, string $password) : bool {
@@ -52,17 +36,17 @@ class UserRepository implements UserRepositoryInterface, RepositoryBaseInterface
         
     }
 
-    public function getUserByEmail(string $email) : userModel{
+    public function getUserByEmail(string $email) : User{
         $res = DB::table($this->tableName())->where('email', $email)->first();
         if ($res !== null) {
-            $model = new userModel(
+            $entity = new User(
+                $res->id,
+                $res->nickname,
                 $res->email,
                 $res->password,
-                $res->nickname,
-                $res->updatedAt,
-                $res->createdAt
             );
-            return $model;
+            return $entity;
         }
+        return null;
     }
 }
