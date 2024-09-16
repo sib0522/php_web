@@ -31,6 +31,10 @@ class PlayerRepository implements PlayerRepositoryInterface, RepositoryBaseInter
     }
 
     public function updatePlayerCreditsByEntity(Player $entity) {
-        
+        DB::table($this->tableName())
+        ->where('id', $entity->id)
+        ->update([
+            'credits' => $entity->credits
+        ]);
     }
 }
