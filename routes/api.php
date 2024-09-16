@@ -1,5 +1,7 @@
 <?php
 
+use App\Core\UseCases\GachaUsecase;
+use App\Services\GachaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Services\UserService;
@@ -31,3 +33,5 @@ Route::post('/user/signup', [UserService::class, 'UserSignupService']);
 Route::get('/ping', function() {
     return response()->json("hello");
 });
+
+Route::post('/gacha', [GachaService::class, 'GachaService']);
