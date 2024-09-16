@@ -14,7 +14,7 @@ class UserService {
         $this->usecase = $userUsecase;
     }
 
-    public function UserSingupService(Request $req) {
+    public function UserSignupService(Request $req) {
         $nickname = $req->input('name');
         $email = $req->input('email');
         $inputPassword = $req->input('inputPassword');

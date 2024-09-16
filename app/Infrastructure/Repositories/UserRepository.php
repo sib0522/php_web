@@ -5,6 +5,7 @@ namespace App\Infrastructure\Repositories;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Core\Entities\User;
+use App\Infrastructure\Repositories\RepositoryBaseInterface;
 
 interface UserRepositoryInterface {
     public function createUser(string $nickname, string $email, string $password) : bool;

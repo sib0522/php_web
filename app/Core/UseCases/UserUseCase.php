@@ -16,7 +16,7 @@ class UserUsecase implements UserUsecaseInterface {
     private UserRepositoryInterface $repo;
 
     public function __construct(UserRepositoryInterface $userRepo) {
-        $repo = $userRepo;
+        $this->repo = $userRepo;
     }
 
     /**
