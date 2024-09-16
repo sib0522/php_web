@@ -17,4 +17,12 @@ final class Player {
         $this->money = $money;
         $this->credits = $credits;
     }
+
+    public function useCredits(int $use) {
+        $this->credits -= $use;
+    }
+
+    public function addCredits(int $add) {
+        $this->credits += $add;
+    }
 }
