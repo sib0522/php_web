@@ -15,7 +15,7 @@ class PlayerCardRepository implements PlayerCardRepositoryInterface, RepositoryB
     }
 
     // playerIdとcardIdを紐づける 
-    public function createPlayerCard(int $playerId, int $cardId) {
+    public function createPlayerCard(int $playerId, int $cardId) : bool {
         $time = time();
 
         $isOk = DB::table($this->tableName())->insert([
@@ -24,10 +24,6 @@ class PlayerCardRepository implements PlayerCardRepositoryInterface, RepositoryB
             'createdAt'=>$time
         ]);
 
-        if (!$isOk) {
-            // error
-        }
-        
-        return null;
+        return $isOk;
     }
 }
