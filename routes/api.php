@@ -4,7 +4,8 @@ use App\Core\UseCases\GachaUsecase;
 use App\Services\GachaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Services\UserService;
+use App\Services\AccountService;
+use App\Services\PlayerService;
 use MessagePack\Packer;
 
 /*
@@ -26,12 +27,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 */
 
 
-Route::post('/user/login', [UserService::class, 'UserLoginService']);
-Route::post('/user/logout', [UserService::class, 'UserLogoutService']);
-Route::post('/user/signup', [UserService::class, 'UserSignupService']);
+Route::post('/account/login', [AccountService::class, 'AccountLoginService']);
+Route::post('/account/logout', [AccountService::class, 'AccountLogoutService']);
+Route::post('/account/signup', [AccountService::class, 'AccountSignupService']);
 
 Route::get('/ping', function() {
     return response()->json("hello");
 });
+
+Route::post('/player/create', [PlayerService::class, 'PlayerCreateService']);
 
 Route::post('/gacha', [GachaService::class, 'GachaService']);
