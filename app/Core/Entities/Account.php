@@ -2,7 +2,7 @@
 
 namespace App\Core\Entities;
 
-final class User {
+final class Account {
     public readonly string $id;
     public readonly string $nickname;
     public readonly string $email;

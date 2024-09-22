@@ -4,43 +4,41 @@ namespace App\Infrastructure\Repositories;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use App\Core\Entities\User;
+use App\Core\Entities\Account;
 use App\Infrastructure\Repositories\RepositoryBaseInterface;
 
-interface UserRepositoryInterface {
-    public function createUser(string $nickname, string $email, string $password) : bool;
-    public function updateUser();
-    public function getUserByEmail(string $email) : User;
+interface AccountRepositoryInterface {
+    public function createAccount(string $nickname, string $email, string $password, string $time) : bool;
+    public function updateAccount();
+    public function getAccountByEmail(string $email);
 }
 
-class UserRepository implements UserRepositoryInterface, RepositoryBaseInterface {
+class AccountRepository implements AccountRepositoryInterface, RepositoryBaseInterface {
     public function tableName(): string {
-        return "user";
+        return "account";
     }
 
-    public function createUser(string $nickname, string $email, string $password) : bool {
-        $time = time();
-
+    public function createAccount(string $nickname, string $email, string $password, string $time) : bool {
         $isOk = DB::table($this->tableName())->insert([
             'id'=>(string)Str::uuid(),
             'nickname'=>$nickname,
             'email'=>$email,
             'password'=>$password,
-            'updatedAt'=>$time,
-            'createdAt'=>$time
+            'created_at'=>$time,
+            'updated_at'=>$time
         ]);
 
         return $isOk;
     }
 
-    public function updateUser() {
+    public function updateAccount() {
         
     }
 
-    public function getUserByEmail(string $email) : User{
+    public function getAccountByEmail(string $email) {
         $res = DB::table($this->tableName())->where('email', $email)->first();
         if ($res !== null) {
-            $entity = new User(
+            $entity = new Account(
                 $res->id,
                 $res->nickname,
                 $res->email,

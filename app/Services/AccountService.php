@@ -2,43 +2,43 @@
 
 namespace App\Services;
 
-use App\Core\UseCases\UserUsecaseInterface;
+use App\Core\UseCases\AccountUsecaseInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class UserService {
-    protected UserUsecaseInterface $usecase;
+class AccountService {
+    protected AccountUsecaseInterface $usecase;
 
-    public function __construct(UserUsecaseInterface $userUsecase)
+    public function __construct(AccountUsecaseInterface $accountUsecase)
     {
-        $this->usecase = $userUsecase;
+        $this->usecase = $accountUsecase;
     }
 
-    public function UserSignupService(Request $req) {
+    public function AccountSignupService(Request $req) {
         $nickname = $req->input('name');
         $email = $req->input('email');
         $inputPassword = $req->input('inputPassword');
         $confirmPassword = $req->input('confirmPassword');
 
 
-        $status = $this->usecase->UserSignupUsecase($nickname, $email, $inputPassword, $confirmPassword);
+        $status = $this->usecase->AccountSignupUsecase($nickname, $email, $inputPassword, $confirmPassword);
         return response()->json([
             'data' => null
         ], $status);
     }
 
-    public function UserLogoutService(Request $req) {
-        $status = $this->usecase->UserLogoutUsecase();
+    public function AccountLogoutService(Request $req) {
+        $status = $this->usecase->AccountLogoutUsecase();
         return response()->json([
             'data' => null,
         ], $status);
     }
 
-    public function UserLoginService(Request $req) {
+    public function AccountLoginService(Request $req) {
         $email = $req->input('email');
         $password = $req->input('password');
         
-        $res = $this->usecase->UserLoginUsecase($email, $password);
+        $res = $this->usecase->AccountLoginUsecase($email, $password);
         if (gettype($res) === "string") {
             return response()->json([
                     'data' => $res,
@@ -48,9 +48,5 @@ class UserService {
         return response()->json([
             'data' => null,
         ], $res);
-}
-
-    public function Ping() {
-        return "sss";
     }
 }

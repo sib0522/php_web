@@ -2,28 +2,27 @@
 
 namespace App\Core\UseCases;
 
-use App\Infrastructure\Repositories\UserRepositoryInterface;
+use App\Infrastructure\Repositories\AccountRepositoryInterface;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 
-interface UserUsecaseInterface {
-    public function UserLoginUsecase(string $email, string $inputPassword);
-    public function UserLogoutUsecase();
-    public function UserSignupUsecase(string $nickname, string $email, string $inputPassword, string $confirmPassword);
+interface AccountUsecaseInterface {
+    public function AccountLoginUsecase(string $email, string $inputPassword);
+    public function AccountLogoutUsecase();
+    public function AccountSignupUsecase(string $nickname, string $email, string $inputPassword, string $confirmPassword);
 }
 
-class UserUsecase implements UserUsecaseInterface {
-    private UserRepositoryInterface $repo;
-
-    public function __construct(UserRepositoryInterface $userRepo) {
-        $this->repo = $userRepo;
+class AccountUsecase implements AccountUsecaseInterface {
+    private AccountRepositoryInterface $repo;
+    public function __construct(AccountRepositoryInterface $accountRepo) {
+        $this->repo = $accountRepo;
     }
 
     /**
      * ログインを行うUsecase
      */
-    public function UserLoginUsecase(string $email, string $inputPassword) {
-        $model = $this->repo->getUserByEmail($email);
+    public function AccountLoginUsecase(string $email, string $inputPassword) {
+        $model = $this->repo->getAccountByEmail($email);
 
         // アカウントが存在しない
         if ($model === null || $model->email === "") {
@@ -45,7 +44,7 @@ class UserUsecase implements UserUsecaseInterface {
     /**
      * ログアウトを行うUsecase
      */
-    public function UserLogoutUsecase() {
+    public function AccountLogoutUsecase() {
         $status = Response::HTTP_BAD_REQUEST;
 
         $value = Session::get('email');
@@ -61,7 +60,7 @@ class UserUsecase implements UserUsecaseInterface {
     /**
      * 会員登録を行うUsecase
      */
-    public function UserSignupUsecase(string $nickname, string $email, string $inputPassword, string $confirmPassword){        
+    public function AccountSignupUsecase(string $nickname, string $email, string $inputPassword, string $confirmPassword){        
         // パスワードが一致しない
         if ($inputPassword !== $confirmPassword) {
             return Response::HTTP_BAD_REQUEST;
@@ -70,14 +69,14 @@ class UserUsecase implements UserUsecaseInterface {
         $hashedPassword = bcrypt($inputPassword);
 
         // アカウントが存在する
-        $model = $this->repo->getUserByEmail($email);
+        $model = $this->repo->getAccountByEmail($email);
         if ($model !== null) {
             return Response::HTTP_BAD_REQUEST;
         }
 
-        $time = now();
+        $time = date('Y-m-d H:i:s', time());
 
-        $isOk = $this->repo->createUser($nickname, $email, $hashedPassword, $time);
+        $isOk = $this->repo->createAccount($nickname, $email, $hashedPassword, $time);
         return $isOk ? Response::HTTP_OK : Response::HTTP_INTERNAL_SERVER_ERROR;
     }
 }
