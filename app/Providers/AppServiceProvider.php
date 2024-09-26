@@ -2,12 +2,20 @@
 
 namespace App\Providers;
 
-use App\Core\UseCases\UserUsecase;
-use App\Core\UseCases\UserUsecaseInterface;
+use App\Core\UseCases\AccountUsecase;
+use App\Core\UseCases\AccountUsecaseInterface;
+use App\Core\UseCases\GachaUsecase;
+use App\Core\UseCases\GachaUsecaseInterface;
+use App\Core\UseCases\PlayerUsecase;
+use App\Core\UseCases\PlayerUsecaseInterface;
 use App\Infrastructure\Repositories\DBError;
 use App\Infrastructure\Repositories\RepositoryBaseInterface;
-use App\Infrastructure\Repositories\UserRepository;
-use App\Infrastructure\Repositories\UserRepositoryInterface;
+use App\Infrastructure\Repositories\AccountRepository;
+use App\Infrastructure\Repositories\AccountRepositoryInterface;
+use App\Infrastructure\Repositories\PlayerCardRepository;
+use App\Infrastructure\Repositories\PlayerCardRepositoryInterface;
+use App\Infrastructure\Repositories\PlayerRepository;
+use App\Infrastructure\Repositories\PlayerRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Sanctum\Sanctum;
 
@@ -23,11 +31,20 @@ class AppServiceProvider extends ServiceProvider
         // Ignore Sanctum
         Sanctum::ignoreMigrations();
 
-        // Inject UserUsecase
-        $this->app->bind(UserUsecaseInterface::class, UserUsecase::class);
+        // Inject AccountUsecase
+        $this->app->bind(AccountUsecaseInterface::class, AccountUsecase::class);
+        $this->app->bind(AccountRepositoryInterface::class, AccountRepository::class);
+        
+        // NOTE: is requried?
+        $this->app->bind(RepositoryBaseInterface::class, AccountRepository::class);
 
-        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
-        $this->app->bind(RepositoryBaseInterface::class, UserRepository::class);
+        // Inject PlayerUsecase
+        $this->app->bind(PlayerUsecaseInterface::class, PlayerUsecase::class);
+        $this->app->bind(PlayerRepositoryInterface::class, PlayerRepository::class);
+
+        // Inject GachaUsecase
+        $this->app->bind(GachaUsecaseInterface::class, GachaUsecase::class);
+        $this->app->bind(PlayerCardRepositoryInterface::class, PlayerCardRepository::class);
     }
 
     /**
