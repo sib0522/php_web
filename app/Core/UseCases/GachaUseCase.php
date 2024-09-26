@@ -28,7 +28,11 @@ class GachaUsecase implements GachaUsecaseInterface {
 
     public function GachaUsecase(int $playerId) {
         $player = $this->playerRepo->getPlayerById($playerId);
-        if ($player->credits < $this::GachaOneCredit) {
+        if ($player === null) {
+            return null;
+        }
+
+        if ($player->credits >= $this::GachaOneCredit) {
             $cardId = $this->gacha();
             $isOk = $this->playerCardRepo->createPlayerCard($playerId, $cardId);
 
@@ -42,6 +46,8 @@ class GachaUsecase implements GachaUsecaseInterface {
 
             // ガチャの結果(cardId)を返す
             return $cardId;
+        } else {
+            // creditsが足りない
         }
 
         // ガチャを実行できなかった
@@ -51,7 +57,7 @@ class GachaUsecase implements GachaUsecaseInterface {
     // ガチャを回して出たカードのidを返す(1回)
     private function gacha() : int {
         $gachaMaster = new GachaMaster();
-        $gm = $gachaMaster->getById(1);
+        $gm = $gachaMaster->getById((string)1);
 
         $cardMaster = new CardMaster();
 
@@ -60,7 +66,11 @@ class GachaUsecase implements GachaUsecaseInterface {
         $resultCardId = 0;
 
         $getCardRarity = function($id) use (&$cardMaster) {
-            return $cardMaster->getById($id)->Rarity;
+            $card = $cardMaster->getById((string)$id);
+            if ($card === null) {
+                echo("error!! card is null");
+            }
+            return $card->Rarity;
         };
 
         $ssrCardList = array_filter($gm->TargetCardIds, function($id) use (&$getCardRarity) {
@@ -91,7 +101,8 @@ class GachaUsecase implements GachaUsecaseInterface {
         } else if ($rate <= GachaUsecase::RRate) {
             $resultCardId = array_rand($rCardList);
         } else {
-            $resultCardId = array_rand($nCardList);
+            // nカードはないのでrリストから取る
+            $resultCardId = array_rand($rCardList);
         }
 
         return $resultCardId;

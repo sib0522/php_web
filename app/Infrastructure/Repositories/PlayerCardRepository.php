@@ -3,10 +3,9 @@
 namespace App\Infrastructure\Repositories;
 
 use Illuminate\Support\Facades\DB;
-use App\Core\Entities\Player;
 
 interface PlayerCardRepositoryInterface {
-    public function createPlayerCard(int $playerId, int $cardId);
+    public function createPlayerCard(int $userId, int $cardId);
 }
 
 class PlayerCardRepository implements PlayerCardRepositoryInterface, RepositoryBaseInterface {
@@ -15,13 +14,13 @@ class PlayerCardRepository implements PlayerCardRepositoryInterface, RepositoryB
     }
 
     // playerIdとcardIdを紐づける 
-    public function createPlayerCard(int $playerId, int $cardId) : bool {
-        $time = time();
+    public function createPlayerCard(int $userId, int $cardId) : bool {
+        $time = date('Y-m-d H:i:s', time());
 
         $isOk = DB::table($this->tableName())->insert([
-            'player_id'=>$playerId,
+            'user_id'=>$userId,
             'card_id'=>$cardId,
-            'createdAt'=>$time
+            'created_at'=>$time
         ]);
 
         return $isOk;

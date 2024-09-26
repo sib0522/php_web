@@ -31,20 +31,15 @@ abstract class MasterBase {
     }
 
     public function withType($key, $value) {
-        //var_dump($this->datas);
         $this->typeInfo = $this->datas[0];
         switch ($this->typeInfo[$key]) {
             case "string":
-                echo($this->typeInfo[$key]);
                 return (string)$value;
             case "int":
-                echo($this->typeInfo[$key]);
                 return (integer)$value;
             case "array(string)":
-                echo($this->typeInfo[$key]);
                 return explode(',', $value);
             case "array(int)":
-                echo($this->typeInfo[$key]);
                 return array_map('intval', explode(',', $value));
         }
     }
