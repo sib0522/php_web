@@ -12,7 +12,6 @@ final class CardMaster extends MasterBase {
 
     public function getById(string $Id) {
         foreach ($this->datas as $data) {
-            var_dump($data);
             if ($data['Id'] == $Id) {
                 return new Card
                 (

@@ -13,14 +13,13 @@ final class GachaMaster extends MasterBase {
     public function getById(string $Id) {
         foreach ($this->datas as $data) {
             if ($data['Id'] === $Id) {
-                $gacha = new Gacha
+                return new Gacha
                 (
                     $this->withType('Id', $data['Id']), 
                     $this->withType('GachaName', $data['GachaName']), 
                     $this->withType('TargetCardIds', $data['TargetCardIds']), 
                     $this->withType('PickupCardIds', $data['PickupCardIds'])
                 );
-                return $gacha;
             }
         }
         return null;
