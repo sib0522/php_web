@@ -14,13 +14,18 @@ class GachaService {
     }
 
     public function GachaService(Request $req) {
-        $playerId = $req->input('id');
+        $userId = $req->input('user_id');
+        $resultCardId = null;
+        $status = 500;
 
-        $cardId = $this->gachaUsecase->GachaUsecase($playerId);
+        if ($userId !== null) {
+            $resultCardId = $this->gachaUsecase->GachaUsecase($userId);
+            $status = $resultCardId === null ? 400 : 200;
+        }
 
         return response()->json([
-            'id' => $playerId,
-            'result' => $cardId
-        ], 500);
+            'id' => $userId,
+            'result' => $resultCardId
+        ], $status);
     }
 }
