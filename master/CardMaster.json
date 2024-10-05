@@ -1,0 +1,44 @@
+[
+    {
+        "Id": "string",
+        "CardName": "string",
+        "ImageURL": "string",
+        "Rarity": "int"
+    },
+    {
+        "Id": "1",
+        "CardName": "日乃出",
+        "ImageURL": "",
+        "Rarity": "4"
+    },
+    {
+        "Id": "2",
+        "CardName": "野良街",
+        "ImageURL": "",
+        "Rarity": "3"
+    },
+    {
+        "Id": "3",
+        "CardName": "渡良瀬",
+        "ImageURL": "",
+        "Rarity": "2"
+    },
+    {
+        "Id": "4",
+        "CardName": "中桜",
+        "ImageURL": "",
+        "Rarity": "4"
+    },
+    {
+        "Id": "5",
+        "CardName": "頬飛",
+        "ImageURL": "",
+        "Rarity": "4"
+    },
+    {
+        "Id": "6",
+        "CardName": "蛹目",
+        "ImageURL": "",
+        "Rarity": "4"
+    }
+]

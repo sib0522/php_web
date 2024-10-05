@@ -1,0 +1,3 @@
+﻿Id,GachaName,TargetCardIds,PickupCardIds
+string,string,array(string),array(string)
+1,チュートリアルガチャ,"1,2,3,4,5",6
