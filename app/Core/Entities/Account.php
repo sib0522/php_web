@@ -3,10 +3,10 @@
 namespace App\Core\Entities;
 
 final class Account {
-    private string $id;
-    private string $nickname;
-    private string $email;
-    private string $password;
+    public readonly string $id;
+    public readonly string $nickname;
+    public readonly string $email;
+    public readonly string $password;
 
     public function __construct(string $id, $nickname, $email, $password)
     {

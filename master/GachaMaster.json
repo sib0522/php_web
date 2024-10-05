@@ -1,0 +1,14 @@
+[
+    {
+        "Id": "string",
+        "GachaName": "string",
+        "TargetCardIds": "array(string)",
+        "PickupCardIds": "array(string)"
+    },
+    {
+        "Id": "1",
+        "GachaName": "チュートリアルガチャ",
+        "TargetCardIds": "1,2,3,4,5",
+        "PickupCardIds": "6"
+    }
+]

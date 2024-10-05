@@ -1,0 +1,8 @@
+﻿Id,CardName,ImageURL,Rarity
+string,string,string,int
+1,日乃出,,4
+2,野良街,,3
+3,渡良瀬,,2
+4,中桜,,4
+5,頬飛,,4
+6,蛹目,,4
