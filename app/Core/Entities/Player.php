@@ -3,11 +3,11 @@
 namespace App\Core\Entities;
 
 final class Player {
-    private string $id; 
-    private int $level;
-    private int $exp;
-    private int $money;
-    private int $credits;
+    public readonly string $id; 
+    public readonly int $level;
+    public readonly int $exp;
+    public readonly int $money;
+    public readonly int $credits;
 
     public function __construct(string $id, int $level, int $exp, int $money, int $credits) 
     {
