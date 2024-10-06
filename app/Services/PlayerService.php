@@ -15,7 +15,9 @@ class PlayerService {
     }
 
     public function PlayerCreateService(Request $req) {
-        $status = $this->usecase->PlayerCreateUsecase();
+        $isOk = $this->usecase->PlayerCreateUsecase();
+        $status = !$isOk ? Response::HTTP_INTERNAL_SERVER_ERROR : Response::HTTP_OK;
+
         return response()->json([
             'data' => null
         ], $status);
