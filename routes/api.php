@@ -1,12 +1,9 @@
 <?php
 
-use App\Core\UseCases\GachaUsecase;
 use App\Services\GachaService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Services\AccountService;
 use App\Services\PlayerService;
-use MessagePack\Packer;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,14 +24,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 */
 
 
-Route::post('/account/login', [AccountService::class, 'AccountLoginService']);
-Route::post('/account/logout', [AccountService::class, 'AccountLogoutService']);
-Route::post('/account/signup', [AccountService::class, 'AccountSignupService']);
-
-Route::get('/ping', function() {
-    return response()->json("hello");
+// 管理画面API
+Route::group(['prefix'=>'account'], function() {
+    Route::post('/login', [AccountService::class, 'AccountLoginService']);
+    Route::post('/logout', [AccountService::class, 'AccountLogoutService']);
+    Route::post('/signup', [AccountService::class, 'AccountSignupService']);
 });
 
-Route::post('/player/create', [PlayerService::class, 'PlayerCreateService']);
+// ユーザーAPI
+Route::group(['prefix'=>'player'], function() {
+    Route::post('/create', [PlayerService::class, 'PlayerCreateService']);
+});
 
+// ガチャAPI
 Route::post('/gacha', [GachaService::class, 'GachaService']);
