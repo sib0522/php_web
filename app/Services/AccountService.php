@@ -47,6 +47,6 @@ class AccountService {
 
         return response()->json([
             'data' => null,
-        ], $res);
+        ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }
