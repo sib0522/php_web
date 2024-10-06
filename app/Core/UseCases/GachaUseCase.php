@@ -6,6 +6,7 @@ use App\Infrastructure\Repositories\PlayerCardRepositoryInterface;
 use App\Infrastructure\Repositories\PlayerRepositoryInterface;
 use Master\CardMaster;
 use Master\GachaMaster;
+use Illuminate\Support\Facades\Log;
 
 interface GachaUsecaseInterface {
     public function GachaUsecase(int $playerId);
@@ -26,9 +27,13 @@ class GachaUsecase implements GachaUsecaseInterface {
         $this->playerCardRepo = $playerCardRepo;
     }
 
+    /**
+     * ガチャを回すUsecase
+     */
     public function GachaUsecase(int $playerId) {
         $player = $this->playerRepo->getPlayerById($playerId);
         if ($player === null) {
+            Log::error('no player');
             return null;
         }
 
@@ -37,6 +42,7 @@ class GachaUsecase implements GachaUsecaseInterface {
             $isOk = $this->playerCardRepo->createPlayerCard($playerId, $cardId);
 
             if (!$isOk) {
+                Log::error('failed to create player card');
                 return null;
             }
 
@@ -47,10 +53,13 @@ class GachaUsecase implements GachaUsecaseInterface {
             // ガチャの結果(cardId)を返す
             return $cardId;
         } else {
-            // creditsが足りない
+            // creditsが足りないのにAPIが送られてきたので、エラーを返す
+            Log::error('credits not enough');
+            return null;
         }
 
         // ガチャを実行できなかった
+        Log::error('failed to gacha');
         return null;
     }
 
